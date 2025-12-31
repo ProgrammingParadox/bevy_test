@@ -15,7 +15,7 @@ pub fn follow_camera(
         if let Ok(entity_transform) = transform_query.get(entity) {
             camera_transform.translation = entity_transform.translation + follow_target.offset;
 
-            camera_transform.look_at(entity_transform.translation, Vec3::Y);
+            // camera_transform.look_at(entity_transform.translation, Vec3::Y);
         }
     }
 }
