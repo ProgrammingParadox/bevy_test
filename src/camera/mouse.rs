@@ -28,9 +28,9 @@ pub fn get_camera_input(
     accumulated_mouse_motion: Res<AccumulatedMouseMotion>,
     cursor_options: Single<&CursorOptions>,
 ) {
-    // if cursor_options.grab_mode == CursorGrabMode::None {
-    //     return;
-    // }
+    if cursor_options.grab_mode == CursorGrabMode::None {
+        return;
+    }
 
     let Ok(mut camera_controller) = camera_controller_query.single_mut() else {
         println!("no camera controller!");
