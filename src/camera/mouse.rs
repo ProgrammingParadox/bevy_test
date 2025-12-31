@@ -1,4 +1,9 @@
-use bevy::{input::mouse::AccumulatedMouseMotion, prelude::*};
+use bevy::{
+    input::mouse::AccumulatedMouseMotion,
+    prelude::*,
+    window::{CursorGrabMode, CursorOptions},
+};
+
 use std::f32::consts::FRAC_PI_2;
 
 #[derive(Component)]
@@ -21,7 +26,12 @@ impl Default for CameraController {
 pub fn get_camera_input(
     mut camera_controller_query: Query<&mut CameraController>,
     accumulated_mouse_motion: Res<AccumulatedMouseMotion>,
+    cursor_options: Single<&CursorOptions>,
 ) {
+    // if cursor_options.grab_mode == CursorGrabMode::None {
+    //     return;
+    // }
+
     let Ok(mut camera_controller) = camera_controller_query.single_mut() else {
         println!("no camera controller!");
 
