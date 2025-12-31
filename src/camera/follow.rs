@@ -6,7 +6,6 @@ pub struct FollowTarget {
     pub offset: Vec3,
 }
 
-// @TODO make it look for followtarget component?
 pub fn follow_camera(
     mut camera_query: Query<(&mut Transform, &FollowTarget), With<Camera>>,
     transform_query: Query<&Transform, Without<Camera>>,
@@ -18,7 +17,5 @@ pub fn follow_camera(
 
             camera_transform.look_at(entity_transform.translation, Vec3::Y);
         }
-
-        // follow
     }
 }

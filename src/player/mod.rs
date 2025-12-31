@@ -1,13 +1,15 @@
 use bevy::prelude::*;
 use bevy_rapier3d::{geometry::*, prelude::*};
 
+use crate::camera::mouse::CameraController;
+
 const PLAYER_SPEED: f32 = 5.0;
 
 #[derive(SystemSet, Debug, Clone, PartialEq, Eq, Hash)]
 pub struct PlayerSpawnSet;
 
 #[derive(Debug, Component)]
-struct Player;
+pub struct Player;
 
 #[derive(Debug, Resource)]
 pub struct PlayerEntity(pub Entity);
@@ -48,6 +50,7 @@ fn move_player(
     time: Res<Time>,
     mut player_input_query: Query<&mut PlayerInput, With<Player>>,
     mut player_controller_query: Query<&mut KinematicCharacterController, With<Player>>,
+    camera_query: Query<&Transform, With<CameraController>>,
 ) {
     let Ok(player_input) = player_input_query.single_mut() else {
         panic!("move_player ran without a Player with Transform and PlayerInput components!");
@@ -59,8 +62,21 @@ fn move_player(
         );
     };
 
-    player_controller.translation =
-        Some(player_input.direction.normalize_or_zero() * PLAYER_SPEED * time.delta_secs());
+    let Ok(camera_transform) = camera_query.single() else {
+        panic!("no camera with a direction to move the player! (move_player in player/mod.rs)");
+    };
+
+    let mut forward = camera_transform.forward().as_vec3();
+    forward.y = 0.0;
+    forward = forward.normalize_or_zero();
+
+    let right = Vec3::Y.cross(forward);
+
+    let player_direction = -((player_input.direction.z * forward)
+        + (player_input.direction.x * right))
+        .normalize_or_zero();
+
+    player_controller.translation = Some(player_direction * PLAYER_SPEED * time.delta_secs());
 }
 
 fn setup_player(mut commands: Commands) {

@@ -50,26 +50,24 @@ fn spawn_world_model(
 ) {
     let floor = meshes.add(Plane3d::new(Vec3::Y, Vec2::splat(10.0)));
     let material = materials.add(Color::WHITE);
+    let cube = meshes.add(Cuboid::new(2.0, 0.5, 1.0));
 
     // The world model camera will render the floor and the cubes spawned in this system.
     // Assigning no `RenderLayers` component defaults to layer 0.
 
     commands.spawn((Mesh3d(floor), MeshMaterial3d(material.clone())));
 
-    // @TODO: Temporary
-    // commands.spawn(Camera3d::default());
+    commands.spawn((
+        Mesh3d(cube.clone()),
+        MeshMaterial3d(material.clone()),
+        Transform::from_xyz(0.0, 0.25, -3.0),
+    ));
 
-    // commands.spawn((
-    //     Mesh3d(cube.clone()),
-    //     MeshMaterial3d(material.clone()),
-    //     Transform::from_xyz(0.0, 0.25, -3.0),
-    // ));
-
-    // commands.spawn((
-    //     Mesh3d(cube),
-    //     MeshMaterial3d(material),
-    //     Transform::from_xyz(0.75, 1.75, 0.0),
-    // ));
+    commands.spawn((
+        Mesh3d(cube),
+        MeshMaterial3d(material),
+        Transform::from_xyz(0.75, 1.75, 0.0),
+    ));
 
     commands
         // Spawn the ground plane
