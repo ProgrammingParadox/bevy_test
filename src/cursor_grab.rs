@@ -1,6 +1,6 @@
 use bevy::{
     prelude::*,
-    window::{CursorGrabMode, CursorOptions},
+    window::{CursorGrabMode, CursorOptions, PrimaryWindow},
 };
 
 pub fn cursor_grab(mut cursor_options: Single<&mut CursorOptions>) {

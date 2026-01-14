@@ -6,3 +6,9 @@ rustflags = ["-C", "link-arg=-fuse-ld=lld"]
 # for Windows
 [target.x86_64-pc-windows-msvc]
 linker = "rust-lld.exe"
+
+# for Windows at school
+[target.x86_64-pc-windows-gnu]
+linker = "C:\\msys2\\mingw64\\bin\\gcc.exe"
+ar = "C:\\msys2\\mingw64\\bin\\ar.exe"
+
