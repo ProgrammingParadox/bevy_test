@@ -4,8 +4,8 @@ use bevy_rapier3d::prelude::*;
 mod cursor_grab;
 
 mod camera;
-
 mod player;
+mod utils;
 
 use bevy_egui::EguiPlugin;
 use bevy_inspector_egui::quick::WorldInspectorPlugin;

@@ -3,6 +3,8 @@ use bevy_rapier3d::{geometry::*, prelude::*};
 
 use crate::camera::mouse::CameraController;
 
+use crate::utils::velocity::Velocity;
+
 const PLAYER_SPEED: f32 = 5.0;
 
 #[derive(SystemSet, Debug, Clone, PartialEq, Eq, Hash)]
@@ -89,6 +91,7 @@ fn setup_player(mut commands: Commands) {
             LockedAxes::ROTATION_LOCKED_X | LockedAxes::ROTATION_LOCKED_Z,
             //Transform::default(),
             Transform::from_xyz(0., 20., 0.),
+            Velocity::default(),
             PlayerInput::default(),
         ))
         .id();
